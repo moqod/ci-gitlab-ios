@@ -14,6 +14,12 @@ done
 
 # TODO: validate parameters
 
+# deal with pods
+if [ -f "Podfile" ]
+then
+    pod install
+fi
+
 # clean project
 xcodebuild clean -workspace $WORKSPACE.xcworkspace -scheme $SCHEME | xcpretty
 
