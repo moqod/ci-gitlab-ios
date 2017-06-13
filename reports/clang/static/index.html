@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+  <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/bootstrap/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel=icon href="./favicon.ico">
+</head>
+<body>
+  <div id="app" class="app">
+    <div class="container">
+      <h1 class="text-warning">
+        Report
+      </h1>
+
+      <div v-if="json" class="summary">
+        <div v-for="(value, key) in json.summary">{{key}}: {{value}}</div>
+      </div>
+
+      <div v-if="json && file.violations.length" v-for="file in json.files" class="files">
+        <h4 class="text-danger" style="word-wrap: break-word;">
+          <a :href="file.violations[0].report" class="text-danger">{{file.path}}</a>
+        </h4>
+        <table class="table table-responsive table-bordered table-sm" style="table-layout: fixed">
+          <tr>
+            <th></th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Location - line/column</th>
+            <th style="width: 40%;">Description</th>
+          </tr>
+          <tr v-for="(violation, index) in file.violations">
+            <td class="files__function">
+              <a
+                  :href="getErrorPath(violation, index, index !== file.violations.length - 1)"
+              >
+                {{violation.function}}
+              </a>
+            </td>
+            <td><mark>{{violation.category}}</mark></td>
+            <td>{{violation.type}}</td>
+            <td>
+              {{violation.line}}
+              <span v-if="violation.line && violation.column">/</span>
+              {{violation.column}}
+            </td>
+            <td><i>{{violation.desc}}</i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        json: false
+      },
+      created: function () {
+        var self = this;
+
+        this.$http.get('./json/report.json').then(function (response) {
+          var contentType = response.headers.map['Content-Type'] || response.headers.map['content-type'];
+
+          if ( contentType[0] === 'application/json' ) {
+            self.$set(self, 'json', response.body);
+          } else {
+            self.$set(self, 'json', JSON.parse(response.body));
+          }
+
+          console.log(contentType, self.json);
+        }, function (response) {
+          // error callback
+        });
+      },
+      methods: {
+        getErrorPath: function(violation, index, isNotEnd) {
+          var anchor = isNotEnd ? '#Path' + (index + 1) : '#EndPath';
+
+          return violation.report + anchor;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
