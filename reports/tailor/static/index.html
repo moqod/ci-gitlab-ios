@@ -54,9 +54,13 @@
         var self = this;
 
         this.$http.get('./json/report.json').then(function (response) {
-          self.json = response.body;
+          var contentType = response.headers.map['Content-Type'] || response.headers.map['content-type'];
 
-          console.log(self.json);
+          if ( contentType[0] === 'application/json' ) {
+            self.$set(self, 'json', response.body);
+          } else {
+            self.$set(self, 'json', JSON.parse(response.body));
+          }
 
         }, function (response) {
           // error callback
