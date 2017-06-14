@@ -16,4 +16,7 @@ fi
 jscpd --languages clike,swift --reporter json --output $JSCPD_JSON_SUMMARY_FOLDER/report.json -e "**/Pods/**"
 
 # copy static files
-cp -R $JSCPD_STATIC_FOLDER/* $JSCPD_FOLDER
+if find "$JSCPD_STATIC_FOLDER" -mindepth 1 -print -quit | grep -q .;
+then
+    cp -R $JSCPD_STATIC_FOLDER/* $JSCPD_FOLDER
+fi
