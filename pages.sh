@@ -1,4 +1,4 @@
-# copy needed artifacts into public folder
+#### Description: Copies needed artifacts into public folder
 
 # vars
 CLANG_STATIC_FOLDER="ci/reports/clang/static"
