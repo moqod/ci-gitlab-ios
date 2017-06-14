@@ -5,6 +5,9 @@ CLANG_JSON_SUMMARY_FOLDER="$TEMP_FOLDER/clang/json"
 TAILOR_JSON_SUMMARY_FOLDER="$TEMP_FOLDER/tailor/json"
 
 # TODO: check Readme is empty
+# TODO: check .gitignore is empty
+# TODO: code duplicates
+
 
 # create folders
 if [ ! -d $CLANG_REPORTS_FOLDER ]; then
