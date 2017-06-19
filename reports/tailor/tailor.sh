@@ -14,7 +14,7 @@ fi
 
 # Tailor
 echo "Producing Tailor.sh report..."
-tailor * -f json > $TAILOR_JSON_SUMMARY_FOLDER/report.json
+tailor * --except=brace-style,trailing-whitespace -f json > $TAILOR_JSON_SUMMARY_FOLDER/report.json
 echo "Done!"
 
 # copy static files
