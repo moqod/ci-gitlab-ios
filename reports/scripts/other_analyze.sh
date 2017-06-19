@@ -6,4 +6,5 @@ sh ci/reports/tailor/tailor.sh
 # find code duplications
 sh ci/reports/jscpd/jscpd.sh
 
-# copy files into public folder
+# general :)
+sh ci/reports/general/general.sh

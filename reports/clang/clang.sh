@@ -1,6 +1,9 @@
-#### Description: runs xcodebuild with analyze action, then generates json report pls copies html output
+#### Description: runs xcodebuild with analyze action
+# Based on output html generates json file
+# HTML parsing done by python script (my first script in Python :)
+# After all the script copies static files and json into result clang folder
 
-# TODO: check for obj-c files existence
+# TODO: launch if needed, check for obj-c files existence
 
 # default vars
 CONFIGURATION="Debug"
