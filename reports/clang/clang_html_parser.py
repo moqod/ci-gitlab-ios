@@ -93,7 +93,7 @@ def report_for_folder(folderPath):
 
     return result;
 
-# magic
+# magic starts here...
 
 # params
 # first - html reports folder
