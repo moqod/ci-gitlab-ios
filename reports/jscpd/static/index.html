@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+  <script src="https://unpkg.com/highlightjs"></script>
+  <!-- <script src="https://unpkg.com/highlight.js"></script> -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+  <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/bootstrap/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel=icon href="./favicon.ico">
+</head>
+<body>
+  <div id="app" class="app">
+    <div class="container">
+      <h1 class="text-warning">
+        Report
+      </h1>
+
+      <div v-if="json" class="summary">
+        <div v-for="(value, key) in json.statistics">{{key}}: {{value}}</div>
+      </div>
+
+      <div v-if="json" v-for="duplicate in json.duplicates" class="files">
+        <div class="file file_first">
+          First file: <a href="./#" class="text-danger">{{duplicate.firstFile.name}}::{{duplicate.firstFile.start}}</a>
+        </div>
+        <div class="file file_first">
+          Second file: <a href="./#" class="text-danger">{{duplicate.secondFile.name}}::{{duplicate.secondFile.start}}</a>
+        </div>
+        <div>
+          lines: {{duplicate.lines}}<br>
+          tokens: {{duplicate.tokens}}
+        </div>
+        <div>
+           <pre v-highlightjs><code class="swift">
+             {{decodeHtml(duplicate.fragment)}}
+           </code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    Vue.directive('highlightjs', {
+      deep: true,
+      bind: function(el, binding) {
+        // on first bind, highlight all targets
+        let targets = el.querySelectorAll('code')
+        targets.forEach((target) => {
+          // if a value is directly assigned to the directive, use this
+          // instead of the element content.
+          if (binding.value) {
+            target.textContent = binding.value
+          }
+          hljs.highlightBlock(target)
+        })
+      },
+      componentUpdated: function(el, binding) {
+        // after an update, re-fill the content and then highlight
+        let targets = el.querySelectorAll('code')
+        targets.forEach((target) => {
+          if (binding.value) {
+            target.textContent = binding.value
+            hljs.highlightBlock(target)
+          }
+        })
+      }
+    })
+    var app = new Vue({
+      el: '#app',
+      data: {
+        json: false
+      },
+      created: function () {
+        var self = this;
+
+        this.$http.get('./json/report.json').then(function (response) {
+          var contentType = response.headers.map['Content-Type'] || response.headers.map['content-type'];
+
+          if ( contentType[0] === 'application/json' ) {
+            self.$set(self, 'json', response.body);
+          } else {
+            self.$set(self, 'json', JSON.parse(response.body));
+          }
+
+          console.log(contentType, self.json);
+        }, function (response) {
+          // error callback
+        });
+      },
+      methods: {
+        getErrorPath: function(violation, index, isNotEnd) {
+          var anchor = isNotEnd ? '#Path' + (index + 1) : '#EndPath';
+
+          return violation.report + anchor;
+        },
+        decodeHtml: function(html) {
+          var txt = document.createElement("textarea");
+          txt.innerHTML = html;
+          return txt.value;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

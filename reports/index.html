@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+  <link rel="stylesheet" href="./static/css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/bootstrap/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="./static/css/main.css">
+  <link rel=icon href="./favicon.ico">
+</head>
+<body>
+  <div id="app" class="app">
+    <div class="container">
+      <h1 class="text-warning">
+        Report
+      </h1>
+
+      <div v-if="json" class="summary">
+        <h2>{{json.summary.project}} v.{{json.summary.bundle_version}}</h2>
+        <li>branch: {{json.summary.branch}}</li>
+        <li>commit: {{json.summary.commit}}</li>
+        <li>date: {{json.summary.time}}</li>
+        <!-- <div v-for="(value, key) in json.summary">{{key}}: {{value}}</div> -->
+      </div>
+      <div v-if="json && json.reports.length" v-for="report in json.reports" class="report" >
+        {{report.type}}<br>
+        <div v-if="report.type === 'clang'">
+
+          <div v-if="report.issues_count > 0 && report.files_count > 0">
+            Found {{report.issues_count}} issue<span v-if="report.issues_count>1">s</span> in {{report.files_count}} files <br>
+          </div>
+          <div v-else>
+            all good
+          </div>
+        </div>
+        <div v-else-if="report.type === 'jscpd'">
+          <div v-if="report.files_count > 0">
+            Found {{report.percentage}}% of source code duplicated<br>
+            {{report.files_count}} files affected
+          </div>
+          <div v-else>
+            all good<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div v-else-if="report.type === 'tailor'">
+          issues_count: {{report.issues_count}}<br>
+          files_count: {{report.files_count}}<br>
+        </div>
+        <div v-else-if="report.type === 'general'">
+          readme_status: {{report.readme_status}}<br>
+          gitignore_exists: {{report.gitignore_exists}}<br>
+          localization_exists: {{report.localization_exists}}<br>
+        </div>
+        <div v-else-if="report.type === 'ui_tests'">
+          tests_count: {{report.tests_count}}<br>
+          failed_tests_count: {{report.failed_tests_count}}<br>
+        </div>
+        <div v-else-if="report.type === 'unit_tests'">
+          tests_count: {{report.tests_count}}<br>
+          failed_tests_count: {{report.failed_tests_count}}<br>
+        </div>
+        <div v-else>
+          <div v-for="(value, key) in report">{{key}}: {{value}}</div>
+        </div>
+        <div v-if="report.report">
+          See details: <a v-bind:href=report.report>here</a>
+        </div>
+        <!-- <h4 class="text-danger" style="word-wrap: break-word;">
+          <a :href="file.violations[0].report" class="text-danger">{{file.path}}</a>
+        </h4> -->
+        <!-- <table class="table table-responsive table-bordered table-sm" style="table-layout: fixed">
+          <tr>
+            <th></th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Location - line/column</th>
+            <th style="width: 40%;">Description</th>
+          </tr>
+          <tr v-for="(violation, index) in file.violations">
+            <td class="files__function">
+              <a
+                  :href="getErrorPath(violation, index, index !== file.violations.length - 1)"
+              >
+                {{violation.function}}
+              </a>
+            </td>
+            <td><mark>{{violation.category}}</mark></td>
+            <td>{{violation.type}}</td>
+            <td>
+              {{violation.line}}
+              <span v-if="violation.line && violation.column">/</span>
+              {{violation.column}}
+            </td>
+            <td><i>{{violation.desc}}</i></td>
+          </tr>
+        </table> -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        json: false
+      },
+      created: function () {
+        var self = this;
+
+        this.$http.get('./json/summary.json').then(function (response) {
+          var contentType = response.headers.map['Content-Type'] || response.headers.map['content-type'];
+
+          if ( contentType[0] === 'application/json' ) {
+            self.$set(self, 'json', response.body);
+          } else {
+            self.$set(self, 'json', JSON.parse(response.body));
+          }
+
+          console.log(contentType, self.json);
+        }, function (response) {
+          // error callback
+        });
+      },
+      methods: {
+        getErrorPath: function(violation, index, isNotEnd) {
+          var anchor = isNotEnd ? '#Path' + (index + 1) : '#EndPath';
+
+          return violation.report + anchor;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
