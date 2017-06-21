@@ -41,7 +41,7 @@
             {{report.files_count}} files affected
           </div>
           <div v-else>
-            all good<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            all good
           </div>
         </div>
         <div v-else-if="report.type === 'tailor'">
@@ -62,7 +62,7 @@
           failed_tests_count: {{report.failed_tests_count}}<br>
         </div>
         <div v-else>
-          <div v-for="(value, key) in report">{{key}}: {{value}}</div>
+          <div v-for="(value, key) in report"><div v-if="key !== 'type' && key != 'report'">{{key}}: {{value}}</div>
         </div>
         <div v-if="report.report">
           See details: <a v-bind:href=report.report>here</a>
