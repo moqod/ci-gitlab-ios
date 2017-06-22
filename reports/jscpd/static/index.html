@@ -36,7 +36,7 @@
           tokens: {{duplicate.tokens}}
         </div>
         <div>
-           <pre v-highlightjs><code class="swift">
+           <pre v-highlightjs><code v-bind:class=getLanguage(duplicate.firstFile.name)>
              {{decodeHtml(duplicate.fragment)}}
            </code></pre>
         </div>
@@ -102,6 +102,25 @@
           var txt = document.createElement("textarea");
           txt.innerHTML = html;
           return txt.value;
+        },
+        getLanguage: function(path) {
+          let ext = function(path) {
+            let ext = path.split('.');
+            if (ext.length > 0)
+              return ext[ext.length - 1];
+            return "";
+          }(path);
+          switch (ext) {
+            case "swift":
+              return "swift";
+              break;
+            case "m":
+            case "h":
+              return "objectivec";
+              break;
+            default:
+              return ""
+          }
         }
       }
     })
