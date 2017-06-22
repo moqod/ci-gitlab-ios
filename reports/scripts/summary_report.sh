@@ -37,12 +37,12 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"reports\":[{\
 \"type\":\"clang\",\
 \"report_json\":\"/$(getProperty "CLANG_JSON_SUMMARY_FOLDER")/report.json\",\
-\"report_html\":\"/$(getProperty "CLANG_FOLDER")/index.html\",\
+\"report_html\":\"/clang/index.html\",\
 \"summary\":\"summary\"\
 },{\
 \"type\":\"jscpd\",\
 \"report_json\":\"/$(getProperty "JSCPD_JSON_SUMMARY_FOLDER")/report.json\",\
-\"report_html\":\"/$(getProperty "JSCPD_FOLDER")/index.html\",\
+\"report_html\":\"/jscpd/index.html\",\
 \"summary\":\"statistics\"\
 }]\
 }"
