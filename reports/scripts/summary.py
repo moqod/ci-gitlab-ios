@@ -6,12 +6,12 @@ import os
 import time
 
 def loadReport(fileJSON):
-    print ("fileJSON " + os.getcwd()+fileJSON)
+    # print ("fileJSON " + os.getcwd()+'/ci_report'+fileJSON)
 
     try:
-        with open(os.getcwd()+fileJSON) as data_file:
+        with open(os.getcwd()+'/ci_report'+fileJSON) as data_file:
             data = json.load(data_file)
-            print("FILE GOOD")
+            # print("FILE GOOD")
             return data
     # except EnvironmentError:
     except IOError:
@@ -41,5 +41,5 @@ summary_report = {"summary" : {"project" : data["project_name"],
                 "time" : time.time()},
                 "reports" : getTestsReport(data["reports"])
                 }
-with open(os.getcwd() + "/reports/json/summary.json", 'w') as outfile:
+with open(os.getcwd() + "/ci_report/json/summary.json", 'w') as outfile:
     json.dump(summary_report, outfile)

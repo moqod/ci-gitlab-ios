@@ -25,7 +25,7 @@
         <!-- <div v-for="(value, key) in json.summary">{{key}}: {{value}}</div> -->
       </div>
       <div v-if="json && json.reports.length" v-for="report in json.reports" class="report" >
-        {{report.type}}<br>
+        <h3>{{report.type}}</h3>
         <div v-if="report.type === 'clang'">
 
           <div v-if="report.violations_count > 0 && report.files_count > 0">
