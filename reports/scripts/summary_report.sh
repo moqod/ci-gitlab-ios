@@ -36,12 +36,12 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"bundle_version\":\"$BUNDLE_VERSION\",\
 \"reports\":[{\
 \"type\":\"clang\",\
-\"report_json\":\"/reports/clang/static/json/report.json\",\
+\"report_json\":\"/clang/json/report.json\",\
 \"report_html\":\"/clang/index.html\",\
 \"summary\":\"summary\"\
 },{\
 \"type\":\"jscpd\",\
-\"report_json\":\"/reports/jscpd/static/json/report.json\",\
+\"report_json\":\"/jscpd/json/report.json\",\
 \"report_html\":\"/jscpd/index.html\",\
 \"summary\":\"statistics\"\
 }]\
@@ -50,3 +50,6 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 # echo $JSON
 
 python reports/scripts/summary.py $JSON
+
+cp -rf reports/index.html ci_report/
+cp -rf reports/static ci_report/
