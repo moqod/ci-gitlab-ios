@@ -31,20 +31,22 @@ done
 
 JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"project_name\":\"$PROJECT_NAME\",\
-        \"commit_hash\":\"$COMMIT_HASH\",\
-        \"commit_message\":\"$COMMIT_MESSAGE\",\
-        \"bundle_version\":\"$BUNDLE_VERSION\",\
-        \"reports\":[{\
-            \"type\":\"clang\",\
-            \"report_json\":\"/clang/json/report.json\",\
-            \"report_html\":\"/clang/index.html\"\
-        },{\
-            \"type\":\"jscpd\",\
-            \"report_json\":\"/jscpd/json/report.json\",\
-            \"report_html\":\"/jscpd/index.html\"\
-        }]\
-    }"
+\"commit_hash\":\"$COMMIT_HASH\",\
+\"commit_message\":\"$COMMIT_MESSAGE\",\
+\"bundle_version\":\"$BUNDLE_VERSION\",\
+\"reports\":[{\
+\"type\":\"clang\",\
+\"report_json\":\"/reports/clang/static/json/report.json\",\
+\"report_html\":\"/clang/index.html\",\
+\"summary\":\"summary\"\
+},{\
+\"type\":\"jscpd\",\
+\"report_json\":\"/reports/jscpd/static/json/report.json\",\
+\"report_html\":\"/jscpd/index.html\",\
+\"summary\":\"statistics\"\
+}]\
+}"
 
-echo $JSON
+# echo $JSON
 
 python reports/scripts/summary.py $JSON
