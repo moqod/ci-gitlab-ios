@@ -6,10 +6,10 @@ import os
 import time
 
 def loadReport(fileJSON):
-    # print ("fileJSON " + os.getcwd()+'/ci_report'+fileJSON)
+    # print ("fileJSON " + os.getcwd()+fileJSON)
 
     try:
-        with open(os.getcwd()+'/ci_report'+fileJSON) as data_file:
+        with open(os.getcwd() + fileJSON) as data_file:
             data = json.load(data_file)
             # print("FILE GOOD")
             return data
