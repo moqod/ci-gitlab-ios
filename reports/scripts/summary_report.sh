@@ -36,13 +36,13 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"bundle_version\":\"$BUNDLE_VERSION\",\
 \"reports\":[{\
 \"type\":\"clang\",\
-\"report_json\":\"/clang/json/report.json\",\
-\"report_html\":\"/clang/index.html\",\
+\"report_json\":\"/$(getProperty "CLANG_JSON_SUMMARY_FOLDER")/report.json\",\
+\"report_html\":\"/$(getProperty "CLANG_FOLDER")/index.html\",\
 \"summary\":\"summary\"\
 },{\
 \"type\":\"jscpd\",\
-\"report_json\":\"/jscpd/json/report.json\",\
-\"report_html\":\"/jscpd/index.html\",\
+\"report_json\":\"/$(getProperty "JSCPD_JSON_SUMMARY_FOLDER")/report.json\",\
+\"report_html\":\"/$(getProperty "JSCPD_FOLDER")/index.html\",\
 \"summary\":\"statistics\"\
 }]\
 }"
