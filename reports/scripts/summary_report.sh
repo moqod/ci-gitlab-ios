@@ -51,5 +51,5 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 
 python reports/scripts/summary.py $JSON
 
-cp -rf reports/index.html ci_report/
-cp -rf reports/static ci_report/
+cp -rf ci/reports/index.html ci_report/
+cp -rf ci/reports/static ci_report/
