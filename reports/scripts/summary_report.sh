@@ -49,7 +49,11 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 
 echo $JSON
 
-python reports/scripts/summary.py $JSON
+# TODO: sazha, fix me!
+mkdir -p ci_report/json
+
+# TODO: get `ci` folder from parameter
+python ci/reports/scripts/summary.py $JSON
 
 cp -rf ci/reports/index.html ci_report/
 cp -rf ci/reports/static ci_report/
