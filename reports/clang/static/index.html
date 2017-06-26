@@ -67,7 +67,7 @@
         this.$http.get('./json/report.json').then(function (response) {
           var contentType = response.headers.map['Content-Type'] || response.headers.map['content-type'];
 
-          if ( contentType[0] === 'application/json' ) {
+          if ( contentType[0] === 'application/json' || typeof(response.body) === 'object' ) {
             self.$set(self, 'json', response.body);
           } else {
             self.$set(self, 'json', JSON.parse(response.body));
