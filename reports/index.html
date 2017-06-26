@@ -115,7 +115,7 @@
           if ( contentType[0] === 'application/json' ) {
             self.$set(self, 'json', response.body);
           } else {
-            self.$set(self, 'json', JSON.parse(response.body));
+            self.$set(self, 'json', JSON.parse(response.body || response));
           }
 
 
