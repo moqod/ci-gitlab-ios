@@ -36,12 +36,12 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"bundle_version\":\"$BUNDLE_VERSION\",\
 \"reports\":[{\
 \"type\":\"clang\",\
-\"report_json\":\"ci_result/clang/json/report.json\",\
+\"report_json\":\"$(pwd)/ci_report/clang/json/report.json\",\
 \"report_html\":\"clang/index.html\",\
 \"summary\":\"summary\"\
 },{\
 \"type\":\"jscpd\",\
-\"report_json\":\"ci_result/jscpd/json/report.json\",\
+\"report_json\":\"$(pwd)/ci_report/jscpd/json/report.json\",\
 \"report_html\":\"jscpd/index.html\",\
 \"summary\":\"statistics\"\
 }]\
