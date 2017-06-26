@@ -49,7 +49,7 @@ def list_from_htmls(folderPath):
     files = filter(lambda path: path.endswith('.html'), os.listdir(folderPath))
 
     for f in files:
-        if "Pods/" not in f # super check for Pods :)
+        if "Pods/" not in f:
             jd = dict_from_html(f)
             # result_list.append(jd)
             path = jd['path']
