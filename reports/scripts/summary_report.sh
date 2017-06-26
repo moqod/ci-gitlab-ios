@@ -7,12 +7,12 @@
 # v - bundle version
 
 # properties support : )
-PROPERTY_FILE="reports/reports.properties"
-function getProperty {
-   PROP_KEY=$1
-   PROP_VALUE=`cat $PROPERTY_FILE | grep "$PROP_KEY" | cut -d'=' -f2`
-   echo $PROP_VALUE
-}
+# PROPERTY_FILE="reports/reports.properties"
+# function getProperty {
+#    PROP_KEY=$1
+#    PROP_VALUE=`cat $PROPERTY_FILE | grep "$PROP_KEY" | cut -d'=' -f2`
+#    echo $PROP_VALUE
+# }
 
 # parse parameters
 while getopts "b:p:h:m:v:" option; do
@@ -36,18 +36,18 @@ JSON="{\"branch\":\"$BRANCH_NAME\",\
 \"bundle_version\":\"$BUNDLE_VERSION\",\
 \"reports\":[{\
 \"type\":\"clang\",\
-\"report_json\":\"/$(getProperty "CLANG_JSON_SUMMARY_FOLDER")/report.json\",\
-\"report_html\":\"/clang/index.html\",\
+\"report_json\":\"ci_result/clang/report.json\",\
+\"report_html\":\"clang/index.html\",\
 \"summary\":\"summary\"\
 },{\
 \"type\":\"jscpd\",\
-\"report_json\":\"/$(getProperty "JSCPD_JSON_SUMMARY_FOLDER")/report.json\",\
-\"report_html\":\"/jscpd/index.html\",\
+\"report_json\":\"ci_result/jscpd/report.json\",\
+\"report_html\":\"jscpd/index.html\",\
 \"summary\":\"statistics\"\
 }]\
 }"
 
-# echo $JSON
+echo $JSON
 
 python reports/scripts/summary.py $JSON
 
