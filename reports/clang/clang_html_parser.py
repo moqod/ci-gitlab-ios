@@ -49,14 +49,15 @@ def list_from_htmls(folderPath):
     files = filter(lambda path: path.endswith('.html'), os.listdir(folderPath))
 
     for f in files:
-        jd = dict_from_html(f)
-        # result_list.append(jd)
-        path = jd['path']
-        if result_dict.has_key(path):
-            existing_array = result_dict[path]
-            existing_array.append(jd)
-        else:
-            result_dict[jd['path']] = [jd]
+        if "Pods/" not in f # super check for Pods :)
+            jd = dict_from_html(f)
+            # result_list.append(jd)
+            path = jd['path']
+            if result_dict.has_key(path):
+                existing_array = result_dict[path]
+                existing_array.append(jd)
+            else:
+                result_dict[jd['path']] = [jd]
 
     # now generate final list
     result_list = []
