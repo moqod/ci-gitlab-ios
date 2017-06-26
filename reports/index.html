@@ -18,10 +18,12 @@
       </h1>
 
       <div v-if="json" class="summary">
-        <h2>{{json.summary.project}} v.{{json.summary.bundle_version}}</h2>
-        <li>branch: {{json.summary.branch}}</li>
-        <li>commit: {{json.summary.commit}}</li>
-        <li>date: {{json.summary.time}}</li>
+        <h2>{{json.summary.project}}
+          <span v-if="json.summary.bundle_version">v.{{json.summary.bundle_version}}</span>
+        </h2>
+        <li>Branch: {{json.summary.branch}}</li>
+        <li>Commit: {{json.summary.commit}}</li>
+        <li>Date: {{getTime(json.summary.time)}}</li>
         <!-- <div v-for="(value, key) in json.summary">{{key}}: {{value}}</div> -->
       </div>
       <div v-if="json && json.reports.length" v-for="report in json.reports" class="report" >
@@ -127,6 +129,21 @@
           var anchor = isNotEnd ? '#Path' + (index + 1) : '#EndPath';
 
           return violation.report + anchor;
+        },
+        getTime: function(time) {
+          function getTwoNumber(val) {
+            return (val>=10)?val:("0" + val);
+          }
+          if (!time)
+            return ""
+          var date = new Date(time * 1000);
+          console.log(Math.floor(time));
+          // return date.toISOString();
+          return getTwoNumber(date.getHours()) + ":" +
+                  getTwoNumber(date.getMinutes()) + ', ' +
+                  getTwoNumber(date.getDate()) + '.' +
+                  getTwoNumber(date.getMonth()) + '.' +
+                  getTwoNumber(date.getFullYear()) ;
         }
       }
     })
