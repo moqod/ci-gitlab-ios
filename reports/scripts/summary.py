@@ -11,9 +11,11 @@ def loadReport(fileJSON):
     try:
         with open(os.getcwd() + fileJSON) as data_file:
             data = json.load(data_file)
-            # print("FILE GOOD")
             return data
     # except EnvironmentError:
+    except ValueError:
+        print("BAD JSON")
+        return {}
     except IOError:
         print("BAD FILE")
         return {}
