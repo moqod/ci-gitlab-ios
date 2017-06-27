@@ -13,6 +13,7 @@
 .report {
 	margin: 0 0 60px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 .files__function {

@@ -29,18 +29,21 @@
       <div v-if="json && json.reports.length" v-for="report in json.reports" class="report" >
         <h3>{{report.type}}</h3>
         <div v-if="report.type === 'clang'">
-
+          <h4>The Clang Static Analyzer is a source code analysis tool that finds bugs in C, C++, and Objective-C programs.</h4>
+          <h5><a href="https://clang-analyzer.llvm.org/">Tool description</a></h5>
           <div v-if="report.violations_count > 0 && report.files_count > 0">
-            Found {{report.violations_count}} issue<span v-if="report.violations_count>1">s</span> in {{report.files_count}} files <br>
+            Found <b>{{report.violations_count}}</b> issue<span v-if="report.violations_count>1">s</span> in <b>{{report.files_count}}</b> files <br>
           </div>
           <div v-else>
             all good
           </div>
         </div>
         <div v-else-if="report.type === 'jscpd'">
+          <h4>Copy/paste detector for programming source code.</h4>
+          <h5><a href="https://github.com/kucherenko/jscpd">Tool description</a></h5>
           <div v-if="report.files > 0">
-            Found {{report.percentage}}% of source code duplicated<br>
-            {{report.files}} files affected
+            Found <b>{{report.percentage}}%</b> of source code duplicated<br>
+            <b>{{report.files}}</b> files affected
           </div>
           <div v-else>
             all good

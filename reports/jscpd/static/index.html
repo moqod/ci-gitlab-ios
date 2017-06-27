@@ -21,19 +21,19 @@
       </h1>
 
       <div v-if="json" class="summary">
-        <div v-for="(value, key) in json.statistics">{{key}}: {{value}}</div>
+        <div v-for="(value, key) in json.statistics">{{key}}: <b>{{value}}</b></div>
       </div>
 
       <div v-if="json" v-for="duplicate in json.duplicates" class="files">
         <div class="file file_first">
-          First file: <a href="./#" class="text-danger">{{duplicate.firstFile.name}}::{{duplicate.firstFile.start}}</a>
+          <span class="text-danger">{{getFilename(duplicate.firstFile.name)}} :{{duplicate.firstFile.start}}</span>  <span class="small">({{duplicate.firstFile.name}})</span>
         </div>
         <div class="file file_first">
-          Second file: <a href="./#" class="text-danger">{{duplicate.secondFile.name}}::{{duplicate.secondFile.start}}</a>
+          <span class="text-danger">{{getFilename(duplicate.secondFile.name)}} :{{duplicate.secondFile.start}}</span> <span class="small">({{duplicate.secondFile.name}})</span>
         </div>
         <div>
-          lines: {{duplicate.lines}}<br>
-          tokens: {{duplicate.tokens}}
+          lines: <b>{{duplicate.lines}}</b><br>
+          tokens: <b>{{duplicate.tokens}}</b>
         </div>
         <div>
            <pre v-highlightjs><code v-bind:class=getLanguage(duplicate.firstFile.name)>
@@ -97,6 +97,9 @@
           var anchor = isNotEnd ? '#Path' + (index + 1) : '#EndPath';
 
           return violation.report + anchor;
+        },
+        getFilename: function (val) {
+          return val.substring(val.lastIndexOf('/')+1,val.length);
         },
         decodeHtml: function(html) {
           var txt = document.createElement("textarea");
