@@ -30,7 +30,7 @@ done
 # deal with pods
 if [ -f "Podfile" ]
 then
-    pod install LANG=en_US.UTF-8
+    pod install
 fi
 
 # clean project
