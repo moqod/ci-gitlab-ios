@@ -34,10 +34,10 @@ then
 fi
 
 # clean project
-xcodebuild clean -workspace $WORKSPACE.xcworkspace -scheme $SCHEME | xcpretty
+xcodebuild clean -workspace "$WORKSPACE".xcworkspace -scheme "$SCHEME" | xcpretty
 
 # analyze project
-xcodebuild analyze CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR="$(pwd)/clang" -workspace $WORKSPACE.xcworkspace -scheme $SCHEME -destination "${DESTINATION}" -configuration $CONFIGURATION | xcpretty
+xcodebuild analyze CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR="$(pwd)/clang" -workspace "$WORKSPACE".xcworkspace -scheme "$SCHEME" -destination "${DESTINATION}" -configuration "$CONFIGURATION" | xcpretty
 
 # create report folders
 if [ ! -d $CLANG_REPORTS_FOLDER ]; then
